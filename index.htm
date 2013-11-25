@@ -1,0 +1,138 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>imgur 2 gifstream converter</title>
+    <style type="text/css">
+        body {
+            background: #e3e6e8;
+            font-family: Georgia;
+            font-size: 14px;
+            color: #333;
+        }
+        h1 {
+            font-size: 1.5em;
+            color: #111;
+        }
+        .hide {
+            display: none;
+        }
+        .loading {
+            color: #900;
+            display: none;
+        }
+        .wrap {
+            width: 60%;
+            min-width: 600px;
+            margin: 0 auto;
+        }
+        input[type=text] {
+            min-width: 300px;
+        }
+        input, textarea {
+            font-size: 1.5em;
+        }
+        textarea {
+            width: 100%;
+            height: 50%;
+        }
+    </style>
+    <script src="jquery-2.0.3.min.js"></script>
+    <script>
+    (function($){
+        $(document).ready(function(){
+            var client_id = 'ab36a6d401c176d',
+                $in_url = $('input[name=albumurl]').first(),
+                $in_form = $('#urlform'),
+                $out_json = $('textarea[name=output]').first();
+            var displayOut = function(str) {
+                $out_json.val(str).show();
+                console.log(str);
+            };
+            var showLoading = function() {
+                $('.loading').show();
+            };
+            var hideLoading = function() {
+                $('.loading').hide();
+            };
+            var parseResponse = function(json) {
+                hideLoading();
+                if (!json.data) {
+                    json = $.parseJSON(json);
+                }
+
+                var stream = {
+                    "version": 1,
+                    "title": "GifStream Teststream",
+                    "identifier": "com.example.gifstream-teststream",
+                    "base": "http://example.com/gifs/",
+                    "license": "Very important license information",
+                    files: []
+                };
+                var images = json.data.images;
+                for (var i = 0; i<images.length; i++) {
+                    var img = images[i];
+                    stream.files.push({
+                        title: img.description || '',
+                        src: img.link // strip slashes
+                    })
+                }
+
+                displayOut(JSON.stringify(stream));
+            };
+            var getAlbum = function(album_id) {
+                var url = 'https://api.imgur.com/3/album/'+album_id;
+                showLoading();
+                $.ajax({
+                    url: 'https://api.imgur.com/3/album/'+album_id,
+                    method: 'GET',
+                    headers: {
+                      Authorization: 'Client-ID ' + client_id,
+                      Accept: 'application/json'
+                    },
+                    success: parseResponse,
+                    error: hideLoading
+                });
+            };
+            var idFromUrl = function(url) {
+                matches = url.match(/(\w+)\/?$/);
+                if (matches === null)
+                    return null;
+                return matches[0];
+            }
+
+            var msg = function(str) {
+                alert(str);
+            }
+
+            var out = function(str) {
+                $out_json.val(str).show();
+            }
+
+            $('input[name=ok]').click(function(e) {
+                e.preventDefault();
+                var album_id = idFromUrl($in_url.val());
+                if (album_id !== null) {
+                    getAlbum(album_id);
+                } else {
+                    msg("Not a valid url");
+                }
+            });
+        })
+    })(jQuery);
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Create a GifStream from an imgur album</h1>
+        <form action="index.htm" id="urlform">
+
+            <div>
+                <span>URL to imgur album</span> <input type="text" name="albumurl" url="albumurl">
+                <input type="button" value="Create GIFstream" name="ok">
+                    <span class="loading">Loading...</span>
+            </div>
+            <textarea name="output" class="hide"></textarea>
+        </form>
+    </div>
+</body>
+</html>
