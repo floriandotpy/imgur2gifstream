@@ -8,7 +8,7 @@ var gifstream = gifstream || (function($){
             stream_version: 1,
             stream_title: 'GifStream Teststream',
             stream_identifier: 'com.example.gifstream-teststream',
-            stream_base: 'http://example.com/gifs/',
+            stream_base: '', // empty when using absolute urls
             stream_license: 'Very important license information',
             callback_success: function(str) {},
             callback_error: function(msg) {}
