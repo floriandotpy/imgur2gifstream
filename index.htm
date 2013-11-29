@@ -10,8 +10,10 @@
             color: #333;
         }
         h1 {
-            font-size: 1.5em;
-            color: #111;
+            font-size: 1em;
+            color: #4e8db9;
+            text-indent: 36px;
+            margin-top: 60px;
         }
         .hide {
             display: none;
@@ -21,26 +23,68 @@
             display: none;
         }
         .wrap {
-            width: 60%;
-            min-width: 600px;
+            width: 760px;
             margin: 0 auto;
         }
         input[type=text] {
             width: 300px;
+            border: 1px solid #eee;
+            padding: 3px;
         }
         input, textarea {
-            font-size: 1.5em;
+            font-size: 1.3em;
+            padding: 3px;
         }
         textarea {
             width: 100%;
             height: 50%;
+            margin-top: 15px;
         }
         .btn {
-            font-size: 1.2em;
-            background: #ccc;
-            border: 1px solid #666;
-            box-shadow: 2px #333;
+            font-size: 1em;
+            background: #4e8db9;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            /*box-shadow: 2px 2px #333;*/
             margin: 0;
+            padding: 8px 10px;
+        }
+        .box {
+            padding: 20px 40px;
+            background: #7abceb;
+            border-radius: 10px;
+        }
+        .col {
+            float: left;
+            height: 40px;
+        }
+        .col-1 {
+            width: 25%;
+            line-height: 34px;
+            color: white;
+            font-weight: normal;
+        }
+        .col-2 {
+            width: 50%;
+
+        }
+        .col-3 {
+            width: 25%;
+        }
+        .clear {
+            clear: both;
+        }
+        .meta {
+            float: right;
+            margin-right: 36px;
+        }
+        .meta a {
+            color: #aaa;
+            text-decoration: underline;
+        }
+        .meta a:hover {
+            color: #666;
         }
     </style>
     <script src="js/jquery-2.0.3.min.js"></script>
@@ -80,13 +124,21 @@
 </head>
 <body>
     <div class="wrap">
+        <aside class="meta">
+            <a href="https://github.com/florianletsch/imgur2gifstream">github</a>
+        </aside>
         <h1>Create a GifStream from an imgur album</h1>
         <form action="index.htm" id="urlform">
-
-            <div>
-                <span>URL to imgur album</span> <input type="text" name="albumurl" url="albumurl">
-                <input type="button" value="Create GIFstream" name="ok" class="btn">
+            <div class="box">
+                <label for="albumurl" class="col col-1">URL to imgur album:</label>
+                <div class="col col-2">
+                    <input type="text" name="albumurl" url="albumurl" placeholder="http://">
+                </div>
+                <div class="col col-3">
+                    <input type="button" value="Create GIFstream" name="ok" class="btn">
                     <span class="loading">Loading...</span>
+                </div>
+                <div class="clear"></div>
             </div>
             <textarea name="output" class="hide"></textarea>
         </form>
