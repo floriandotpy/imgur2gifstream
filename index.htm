@@ -19,7 +19,7 @@
             display: none;
         }
         .loading {
-            color: #900;
+            margin: 5px 45%;
             display: none;
         }
         .wrap {
@@ -46,18 +46,18 @@
             color: white;
             border: none;
             border-radius: 10px;
-            /*box-shadow: 2px 2px #333;*/
             margin: 0;
             padding: 8px 10px;
         }
         .box {
-            padding: 20px 40px;
+            padding: 20px 30px;
             background: #7abceb;
             border-radius: 10px;
         }
         .col {
             float: left;
-            height: 40px;
+            height: 34px;
+            text-align: center;
         }
         .col-1 {
             width: 25%;
@@ -136,10 +136,10 @@
                 </div>
                 <div class="col col-3">
                     <input type="button" value="Create GIFstream" name="ok" class="btn">
-                    <span class="loading">Loading...</span>
                 </div>
                 <div class="clear"></div>
             </div>
+            <img class="loading" src="img/loading.gif" alt="Loading animation" width="24" height="24" />
             <textarea name="output" class="hide"></textarea>
         </form>
     </div>
