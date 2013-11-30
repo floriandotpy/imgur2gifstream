@@ -31,10 +31,12 @@ var gifstream = gifstream || (function($){
         var images = json.data.images;
         for (var i = 0; i<images.length; i++) {
             var img = images[i];
-            stream.files.push({
-                title: img.description || '',
-                src: img.link // strip slashes?
-            })
+            if (img.link.match(/.gif$/i)) {
+                stream.files.push({
+                    title: img.description || '',
+                    src: img.link // strip slashes?
+                });
+            }
         }
 
         settings.callback_success(JSON.stringify(stream));
